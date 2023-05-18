@@ -1,0 +1,25 @@
+Assignment: Blog article
+
+Header:
+- Use <nav> for the navigation bar
+- Use any logo you want as long as it’s horizontal
+- You MUST use font awesome for the icons, USE OF SVG or IMG tag or FLOAT attr is FORBIDDEN
+- Use flexbox with the vertical/horizontal layout
+
+Hero section:
+- Use <header> for the first half (before the line) and use <main> for the rest
+- You must respect the semantics of the page (H1-H5)
+- Use flexbox with the vertical/horizontal layout
+
+Footer:
+- Use <footer> for the footer section
+- You must use grid for the layout with 12 columns layout
+
+
+
+Things to look for when developing:
+- You must structure your files (NO INLINING of styles)
+- You must name your css classes properly
+- NO GLOBAL STYLING OF THE TAGS THEMSELVES
+- NO USE OF BOOTSTRAP OR ANY CSS LIBRARY
+- You must respect the indentations (use 1 tab)
