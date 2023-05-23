@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Bootstrap Example</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<div class="container text-center" id="all">
+		<h1>ToDo List</h1>
+		<!-- <form action="/action_page.php">
+			<input type="text" id="item" name="item" value="Enter your item here" class="text-center"><br><br>
+			<input type="submit" value="Submit">
+		</form> -->
+		<form onsubmit="event.preventDefault(); add_item();">
+			<div class="form-group">
+				<input type="text" class="form-control text-center" id="item" placeholder="Enter your item here">
+			</div>
+			<button type="button" class="btn bg-primary m-3 text-white" id="add-item">Add Item</button>
+		</form><br>
+		<div class="container text-center" id="item-div">
+		</div>
+	</div>
+
+	<script>
+		var list_items=JSON.parse(localStorage.getItem('item-list'));
+		console.log(list_items);
+		if (list_items==undefined)
+			list_items = [];
+		list_items.forEach(generate_item);
+		function generate_item(_item) {
+			const div = document.getElementById('item-div');
+			const item = document.createElement('div');
+			const text = document.createElement('span');
+			const button_flex = document.createElement('div');
+
+			text.innerText = _item.name;
+			item.className = _item.done ? "rounded-2 border border-success border-5 m-3" : 'rounded-2 text-white bg-primary border border-primary border-5 m-3';
+				
+			item.appendChild(text);
+			button_flex.className = 'd-flex flex-row-reverse align-items-end'
+			let button = document.createElement('button');
+			button.type = "button"
+			button.id = 'done'
+			button.className = 'btn btn-success m-1'
+			let icon = document.createElement('i');
+			icon.className = 'fa fa-check-circle whiteiconcolor pe-none';
+			button.appendChild(icon)
+			button.addEventListener('click', (e) => {
+				item.className = 'rounded-2 border border-success border-5 m-3'
+				const _new = {name:_item.name, done:true, id : _item.id}
+				list_items = list_items.map(i => i.id ===_new.id ? _new : i)
+				console.log(list_items);
+				localStorage.setItem('item-list', JSON.stringify(list_items))
+			});
+			button_flex.appendChild(button);
+			button = document.createElement('button');
+			button.type = "button"
+			button.className = 'btn btn-danger m-1'
+			button.id = 'delete'
+			icon = document.createElement('i');
+			icon.className = 'fa fa-trash whiteiconcolor pe-none'
+			button.appendChild(icon)
+			button.addEventListener('click', (e) => {
+				div.removeChild(item);
+				list_items.splice(list_items.indexOf(_item), 1)
+				localStorage.setItem('item-list', JSON.stringify(list_items))
+			});
+			button_flex.appendChild(button);
+			item.appendChild(button_flex);
+			div.appendChild(item);
+			// localStorage.clear()
+
+		}
+		
+		document.querySelector('#add-item').addEventListener('click',add_item);
+		
+		function add_item() {
+			const el = document.getElementById('item');
+			console.log();
+			if (el.value == '')
+			return;
+			const _item = {name:el.value, done:false , id : Math.random().toString(36).substring(2)}
+			generate_item(_item);
+			list_items.push(_item)
+			localStorage.setItem('item-list', JSON.stringify(list_items))
+			el.value='';
+		}
+	</script>
+
+
+</body>
+
+</html>
